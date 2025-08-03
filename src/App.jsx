@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { FaCloud, FaBolt, FaPalette, FaRocket, FaCheckCircle, FaTachometerAlt, FaMagic, FaTimes, FaGitAlt, FaDocker, FaAws } from 'react-icons/fa'
+import { FaCloud, FaBolt, FaPalette, FaRocket, FaCheckCircle, FaTachometerAlt, FaMagic, FaTimes, FaGitAlt, FaDocker, FaAws, FaBars, FaHome, FaUser, FaCog } from 'react-icons/fa'
 import './App.css'
 
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showManual, setShowManual] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -132,6 +133,14 @@ function App() {
     }
   ]
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+    setIsMobileMenuOpen(false)
+  }
+
   const features = [
     {
       title: "Cloud DevOps",
@@ -165,8 +174,41 @@ function App() {
         />
       </div>
 
+      {/* Navigation */}
+      <nav className="navbar">
+        <div className="nav-container">
+          <div className="nav-logo">
+            <FaCloud className="nav-logo-icon" />
+            <span>DevOps Practice</span>
+          </div>
+          
+          <div className={`nav-menu ${isMobileMenuOpen ? 'nav-menu-active' : ''}`}>
+            <div className="nav-item" onClick={() => scrollToSection('hero')}>
+              <FaHome className="nav-icon" />
+              <span>Home</span>
+            </div>
+            <div className="nav-item" onClick={() => scrollToSection('features')}>
+              <FaRocket className="nav-icon" />
+              <span>Features</span>
+            </div>
+            <div className="nav-item" onClick={() => scrollToSection('tech-stack')}>
+              <FaCog className="nav-icon" />
+              <span>Tech Stack</span>
+            </div>
+            <div className="nav-item" onClick={() => scrollToSection('stats')}>
+              <FaUser className="nav-icon" />
+              <span>Stats</span>
+            </div>
+          </div>
+          
+          <div className="nav-hamburger" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <FaBars />
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="hero">
+      <section id="hero" className="hero">
         <div className="hero-content">
           <div className="floating-shapes">
             <div className="shape shape-1"></div>
@@ -189,7 +231,7 @@ function App() {
       </section>
 
       {/* Features Section */}
-      <section className="features">
+      <section id="features" className="features">
         <div className="container">
           <h2 className="section-title">
             <span className="gradient-text">Features</span>
@@ -207,7 +249,7 @@ function App() {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="tech-stack">
+      <section id="tech-stack" className="tech-stack">
         <div className="container">
           <h2 className="section-title">
             <span className="gradient-text">Tech Stack</span>
@@ -223,7 +265,7 @@ function App() {
       </section>
 
       {/* Stats Section */}
-      <section className="stats">
+      <section id="stats" className="stats">
         <div className="container">
           <div className="stats-grid">
             <div className="stat-item">
